@@ -1,12 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> STORM CARTERAS </title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Storm Carteras </title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Fuentes externas desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body> 
-    <h1> Storm Carteras </h1>
+<body>
+
+  <!-- Input Checkbox invisible para controlar la apertura del carrito mediante CSS puro -->
+  <input type="checkbox" id="cart-toggle" class="cart-toggle-checkbox">
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <header class="navbar">
+    <a href="#" class="brand-logo">STORM<span>.</span></a>
+    
+    <nav class="nav-links">
+      <a href="#catalogo">Colección</a>
+      <a href="#servicios">Servicios & Envíos</a>
+      <a href="#nosotros">Nosotros</a>
+    </nav>
+
+    <!-- Botón del Carrito (vinculado al checkbox) -->
+    <label for="cart-toggle" class="cart-btn" aria-label="Abrir Carrito">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-badge">2</span>
+    </label>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="tagline">Diseño Artesanal & Elegancia</span>
+      <h1>Carteras que definen tu presencia</h1>
+      <p>Piezas únicas confeccionadas en cuero genuino. Diseñadas para acompañarte en cada momento con distinción y carácter.</p>
+      <a href="#catalogo" class="btn-primary">Explorar Colección</a>
+    </div>
+    <div class="hero-image-wrapper">
+      <div class="glow-effect"></div>
+      <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80" alt="Cartera de cuero de lujo" class="hero-img">
+    </div>
+  </section>
+
+  <!-- CATÁLOGO DE PRODUCTOS -->
+  <section class="catalog-section" id="catalogo">
+    <div class="section-header">
+      <h2>Catálogo Destacado</h2>
+      <p>Selecciona tu pieza favorita y agrégala al carrito</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- PRODUCTO 1 -->
+      <article class="product-card" data-product-id="PROD-001">
+        <div class="card-image-container">
+          <span class="badge-new">Nuevo</span>
+          <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80" alt="Tote Bag Cuero" class="product-img">
+          <!-- Acción simulada de añadir al carrito -->
+          <label for="cart-toggle" class="btn-quick-add">
+            <span>+ Agregar al Carrito</span>
+          </label>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Tote Bags</span>
+          <h3 class="product-title">Tote Milano Noir</h3>
+          <p class="product-price">$120.000</p>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 2 -->
+      <article class="product-card" data-product-id="PROD-002">
+        <div class="card-image-container">
+          <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80" alt="Bandolera Cognac" class="product-img">
+          <label for="cart-toggle" class="btn-quick-add">
+            <span>+ Agregar al Carrito</span>
+          </label>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Bandoleras</span>
+          <h3 class="product-title">Bandolera Cognac Classic</h3>
+          <p class="product-price">$85.500</p>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 3 -->
+      <article class="product-card" data-product-id="PROD-003">
+        <div class="card-image-container">
+          <span class="badge-new">Edición Limitada</span>
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80" alt="Cartera de Mano" class="product-img">
+          <label for="cart-toggle" class="btn-quick-add">
+            <span>+ Agregar al Carrito</span>
+          </label>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Carteras de Mano</span>
+          <h3 class="product-title">Clutch Roma Emerald</h3>
+          <p class="product-price">$98.000</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE SERVICIOS PREPARADA PARA APIS DE ENVÍO Y PAGO -->
+  <section class="services-section" id="servicios">
+    <div class="section-header">
+      <h2>Experiencia de Compra</h2>
+      <p>Servicios diseñados para una transacción segura y rápida</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Cotización de Envíos -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="16" height="13" x="1" y="6" rx="2"/><polygon points="16 8 20 8 23 11 23 19 16 19 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3>Cotización de Envío en Tiempo Real</h3>
+        <p>Integrado directamente con las principales empresas de logística según tu código postal.</p>
+        
+        <!-- Formulario estático preparado para recibir JS/API de envíos -->
+        <form class="shipping-preview-form" onsubmit="return false;">
+          <input type="text" placeholder="Tu Código Postal..." required>
+          <button type="button" class="btn-secondary">Calcular</button>
+        </form>
+      </div>
+
+      <!-- Medios de Pago -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <h3>Pagos 100% Seguros</h3>
+        <p>Aceptamos todas las tarjetas de crédito, débito y transferencias con encriptación de grado bancario.</p>
+        <div class="payment-badges">
+          <span>Tarjeta de Crédito</span>
+          <span>Débito</span>
+          <span>Transferencia</span>
+        </div>
+      </div>
+
+      <!-- Garantía -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>Garantía de Calidad</h3>
+        <p>6 meses de garantía directa de fábrica en costuras, herrajes y cierres.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL LATERAL DEL CARRITO (SIDEBAR) -->
+  <aside class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Tu Carrito</h3>
+      <label for="cart-toggle" class="close-cart-btn">&times;</label>
+    </div>
+
+    <div class="cart-body">
+      <!-- Ítem en carrito 1 -->
+      <div class="cart-item">
+        <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=150&q=80" alt="Producto">
+        <div class="cart-item-details">
+          <h4>Tote Milano Noir</h4>
+          <span class="cart-item-price">$120.000</span>
+          <div class="qty-selector">Cant: 1</div>
+        </div>
+      </div>
+
+      <!-- Ítem en carrito 2 -->
+      <div class="cart-item">
+        <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=150&q=80" alt="Producto">
+        <div class="cart-item-details">
+          <h4>Bandolera Cognac Classic</h4>
+          <span class="cart-item-price">$85.500</span>
+          <div class="qty-selector">Cant: 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtotal y checkout preparado para backend -->
+    <div class="cart-footer">
+      <div class="summary-line">
+        <span>Subtotal:</span>
+        <span class="total-price">$205.500</span>
+      </div>
+      <p class="shipping-note">* Los costos de envío se calcularán en el checkout</p>
+      <button class="btn-checkout">Finalizar Compra</button>
+    </div>
+  </aside>
+
+  <!-- OVERLAY / FONDO OSCURO CUANDO SE ABRE EL CARRITO -->
+  <label for="cart-toggle" class="cart-overlay"></label>
+
 </body>
 </html>
