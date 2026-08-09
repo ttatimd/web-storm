@@ -2,12 +2,26 @@ import React, { useState } from 'react';
 import { ClientCatalogView } from './components/ClientCatalogView';
 import { AdminCatalogView } from './components/AdminCatalogView';
 import { CartSidebar } from './components/CartSidebar';
+import { LoginModal } from './components/LoginModal';
 import './App.css';
 
 function App() {
-  const [view, setView] = useState('client');
+  // Estado que guarda el usuario autenticado que retorna Java
+  const [currentUser, setCurrentUser] = useState(null); 
+  
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+
+  // Recibe la respuesta del backend tras un login exitoso
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setIsCartOpen(false);
+  };
 
   const handleAddToCart = (productId) => {
     setCartItems((prevItems) => {
@@ -36,7 +50,7 @@ function App() {
   };
 
   const handleCheckout = () => {
-    alert('¡Pedido enviado!');
+    alert('¡Pedido enviado a procesar!');
     setCartItems([]);
     setIsCartOpen(false);
   };
@@ -46,26 +60,22 @@ function App() {
       <header className="navbar">
         <a href="#" className="brand-logo">STORM<span>.</span></a>
 
-        <div className="mode-switcher">
-          <button 
-            className={view === 'client' ? 'active' : ''} 
-            onClick={() => setView('client')}
-          >
-            Vista Tienda (Cliente)
-          </button>
-          <button 
-            className={view === 'admin' ? 'active' : ''} 
-            onClick={() => {
-              setView('admin');
-              setIsCartOpen(false); // Cierra el carrito si estaba abierto
-            }}
-          >
-            Vista Panel (Admin)
-          </button>
+        {/* Panel superior de usuario / inicio de sesión */}
+        <div className="user-controls">
+          {currentUser ? (
+            <div className="session-info">
+              <span>Hola, <strong>{currentUser.username}</strong> ({currentUser.rol})</span>
+              <button onClick={handleLogout} className="btn-logout">Cerrar Sesión</button>
+            </div>
+          ) : (
+            <button onClick={() => setIsLoginOpen(true)} className="btn-login">
+              Iniciar Sesión
+            </button>
+          )}
         </div>
 
-        {/* Solo mostramos el botón del carrito al cliente */}
-        {view === 'client' && (
+        {/* El carrito SOLO está disponible para usuarios CLIENTE o visitantes (no ADMIN) */}
+        {currentUser?.rol !== 'ADMIN' && (
           <button className="cart-btn" onClick={() => setIsCartOpen(true)}>
             🛒 <span className="cart-badge">{cartItems.reduce((acc, i) => acc + i.cantidad, 0)}</span>
           </button>
@@ -73,15 +83,16 @@ function App() {
       </header>
 
       <main>
-        {view === 'client' ? (
-          <ClientCatalogView onAddToCart={handleAddToCart} />
-        ) : (
+        {/* CONMUTACIÓN SEGÚN EL ROL DEVUELTO POR JAVA */}
+        {currentUser?.rol === 'ADMIN' ? (
           <AdminCatalogView />
+        ) : (
+          <ClientCatalogView onAddToCart={handleAddToCart} />
         )}
       </main>
 
-      {/* CartSidebar se renderiza únicamente cuando la vista es 'client' */}
-      {view === 'client' && (
+      {/* CartSidebar sólo para vista Cliente */}
+      {currentUser?.rol !== 'ADMIN' && (
         <CartSidebar
           isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
@@ -90,6 +101,13 @@ function App() {
           onCheckout={handleCheckout}
         />
       )}
+
+      {/* Cartel flotante / Modal de Iniciar Sesión */}
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={() => setIsLoginOpen(false)} 
+        onLoginSuccess={handleLoginSuccess} 
+      />
     </div>
   );
 }
